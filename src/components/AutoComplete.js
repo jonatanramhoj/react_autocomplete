@@ -64,7 +64,7 @@ class AutoComplete extends Component {
     }
 
     updateValOnChange(selectedText) {
-        this.setState({ selectedText: selectedText });
+        this.setState({ selectedText: selectedText, tempVal: selectedText });
     }
 
     handleArrowKeys(e) {
@@ -73,6 +73,7 @@ class AutoComplete extends Component {
         }
         const list = this.suggestionsList;
         const first = list.firstChild;
+        const last = list.lastChild;
         const input = this.searchInput;
 
         switch (e.keyCode) {
@@ -80,23 +81,35 @@ class AutoComplete extends Component {
             case 40:
                 if (document.activeElement === input) {
                     first.focus();
-                    this.setState({ selectedText: first.innerHTML })
+                    this.setState({ selectedText: first.firstChild.innerHTML })
                 } else if (document.activeElement.nextElementSibling !== null) {
                     const next = document.activeElement.nextElementSibling;
                     next.focus();
-                    this.setState({ selectedText: next.innerHTML })
+                    this.setState({ selectedText: next.firstChild.innerHTML })
+                } else if (document.activeElement === last) {
+                    input.focus();
+                    this.setState({ selectedText: this.state.tempVal })
                 }
                 break;
             // Arrow up    
             case 38:
                 if (document.activeElement === first) {
                     input.focus();
+                    this.setState({ selectedText: this.state.tempVal })
                 } else if (document.activeElement === input)
-                    break;
+                    last.focus();
                 else {
                     const previous = document.activeElement.previousElementSibling;
                     previous.focus();
-                    this.setState({ selectedText: previous.innerHTML })
+                    this.setState({ selectedText: previous.firstChild.innerHTML })
+                }
+                break;
+            // Enter
+            case 13:
+                if (document.activeElement === input) {
+                    break;
+                } else {
+                    this.setState({ selectedText: document.activeElement.firstChild.innerHTML, suggestions: [] });
                 }
         }
 
@@ -128,7 +141,7 @@ class AutoComplete extends Component {
                                             onClick={(e) => this.updateValOnClick(e.target)}
                                             tabIndex="1"
                                         >
-                                            {item}
+                                            <a className="autocomplete__suggestions-link">{item}</a>
                                         </li>
                                     );
                                 })}

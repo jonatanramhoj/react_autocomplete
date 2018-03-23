@@ -41,9 +41,11 @@ body {
 }
 
 .autocomplete__suggestions-item {
+  display: block;
   margin-bottom: 5px;
   transition: color 0.15s ease-in-out;
   cursor: pointer;
+  outline: none;
 }
 
 .autocomplete__suggestions-item:last-child {
@@ -52,6 +54,16 @@ body {
 
 .autocomplete__suggestions-item:hover {
   color: purple;
+}
+
+.autocomplete__suggestions-link {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+}
+
+.autocomplete__suggestions-item:focus .autocomplete__suggestions-link {
+  color: purple;
+  border-color: purple;
 }
 
 .arrow-up {
