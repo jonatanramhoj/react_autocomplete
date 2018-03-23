@@ -9,7 +9,8 @@ class AutoComplete extends Component {
 
         this.state = {
             suggestions: [],
-            selectedText: ''
+            selectedText: '',
+            activeIndex: null,
         }
     }
 
@@ -75,31 +76,48 @@ class AutoComplete extends Component {
         const first = list.firstChild;
         const input = this.searchInput;
 
+        // switch (e.keyCode) {
+        //     // Arrow down
+        //     case 40:
+        //         if (document.activeElement === input) {
+        //             first.focus();
+        //             this.setState({ selectedText: first.innerHTML })
+        //         } else if (document.activeElement.nextElementSibling !== null) {
+        //             const next = document.activeElement.nextElementSibling;
+        //             next.focus();
+        //             this.setState({ selectedText: next.innerHTML })
+        //         }
+        //         break;
+        //     // Arrow up    
+        //     case 38:
+        //         if (document.activeElement === first) {
+        //             input.focus();
+        //         } else if (document.activeElement === input)
+        //             break;
+        //         else {
+        //             const previous = document.activeElement.previousElementSibling;
+        //             previous.focus();
+        //             this.setState({ selectedText: previous.innerHTML })
+        //         }
+        // }
+
         switch (e.keyCode) {
-            // Arrow down
-            case 40:
-                if (document.activeElement === input) {
-                    first.focus();
-                    this.setState({ selectedText: first.innerHTML })
-                } else if (document.activeElement.nextElementSibling !== null) {
-                    const next = document.activeElement.nextElementSibling;
-                    next.focus();
-                    this.setState({ selectedText: next.innerHTML })
-                }
-                break;
-            // Arrow up    
-            case 38:
-                if (document.activeElement === first) {
-                    input.focus();
-                } else if (document.activeElement === input)
-                    break;
-                else {
-                    const previous = document.activeElement.previousElementSibling;
-                    previous.focus();
-                    this.setState({ selectedText: previous.innerHTML })
+            case 40: 
+                if (this.state.activeIndex === null) {
+                    console.log('first', first.dataset.index);
+                    this.setState({activeIndex: first.dataset.index}, () => {
+                        first.classList.add('active');
+                    });
+                } else {
+                    console.log('else...');
                 }
         }
 
+    }
+
+    setActive(index) {
+        const active = this.state.activeIndex === index ? 'active' : '';
+        return active;
     }
 
     render() {
@@ -119,14 +137,16 @@ class AutoComplete extends Component {
                         <div className="arrow-up"></div>
                         <div className="autocomplete__suggestions-inner">
                             <ul ref={(list) => { this.suggestionsList = list; }}>
-                                {this.state.suggestions.map((item) => {
+                                {this.state.suggestions.map((item, index) => {
+                                    const active = this.setActive(index);
                                     return (
                                         <li
                                             ref={(item) => { this.suggestedText = item; }}
                                             key={item}
-                                            className="autocomplete__suggestions-item"
+                                            className={`autocomplete__suggestions-item ${active}`}
                                             onClick={(e) => this.updateValOnClick(e.target)}
                                             tabIndex="1"
+                                            data-index={index}
                                         >
                                             {item}
                                         </li>

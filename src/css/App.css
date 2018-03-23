@@ -66,6 +66,11 @@ body {
   border-bottom: 10px solid #fff;
 }
 
+.active {
+  color: purple;
+  text-decoration: underline;
+}
+
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #aaa;
   font-weight: bold;
