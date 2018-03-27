@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import data from '../data';
+import data from '../data/data';
 
 let quickSearchTimeout;
 
@@ -29,7 +29,6 @@ class AutoComplete extends Component {
     }
 
     handleSearch = (e) => {
-        e.persist(); // Allows us to access the event properties in an asyncronous way
         const searchText = e.target.value;
         const result = [];
 
@@ -128,7 +127,7 @@ class AutoComplete extends Component {
                     onChange={(e) => this.updateValOnChange(e.target.value)}
                 />
                 {this.state.suggestions.length > 0 &&
-                    <div className={`autocomplete__suggestions`}>
+                    <div className="autocomplete__suggestions">
                         <div className="arrow-up"></div>
                         <div className="autocomplete__suggestions-inner">
                             <ul ref={(list) => { this.suggestionsList = list; }}>
