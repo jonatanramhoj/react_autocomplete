@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
 
 body {
   background: linear-gradient(to top, #ebc0fd 0%, #d9ded8 100%);
   width: 100%;
   height: 100vh;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   color: #444;
 }
 
@@ -17,7 +17,7 @@ body {
 
 .autocomplete__input {
   padding: 20px;
-  box-shadow: 0 7px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 7px 30px rgba(0, 0, 0, 0.2);
   outline: none;
   border: none;
   min-width: 400px;
@@ -32,12 +32,14 @@ body {
   left: 0;
   top: 70px;
   background: #fff;
-  box-shadow: 0 7px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 7px 30px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
 
 .autocomplete__suggestions-inner {
   padding: 20px;
+  max-height: 450px;
+  overflow-y: auto;
 }
 
 .autocomplete__suggestions-item {
@@ -61,7 +63,7 @@ body {
   padding-bottom: 1px;
 }
 
-.autocomplete__suggestions-item:focus .autocomplete__suggestions-link {
+.active {
   color: purple;
   border-color: purple;
 }
@@ -71,26 +73,30 @@ body {
   top: -9px;
   left: 50%;
   transform: translate(-50%, 0);
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid #fff;
 }
 
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
   color: #aaa;
   font-weight: bold;
 }
-::-moz-placeholder { /* Firefox 19+ */
+::-moz-placeholder {
+  /* Firefox 19+ */
   color: #aaa;
   font-weight: bold;
 }
-:-ms-input-placeholder { /* IE 10+ */
+:-ms-input-placeholder {
+  /* IE 10+ */
   color: #aaa;
   font-weight: bold;
 }
-:-moz-placeholder { /* Firefox 18- */
+:-moz-placeholder {
+  /* Firefox 18- */
   color: #aaa;
   font-weight: bold;
 }
