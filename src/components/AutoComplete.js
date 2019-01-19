@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import data from "../data/data";
 
+let currentFocus;
 class AutoComplete extends Component {
   constructor() {
     super();
@@ -19,7 +20,8 @@ class AutoComplete extends Component {
   }
 
   componentWillMount() {
-    document.addEventListener("keydown", this.handleEscape.bind(this));
+    document.addEventListener("keyup", this.handleEscape);
+    document.addEventListener("keydown", this.handleNavigation);
   }
 
   handleEscape = e => {
@@ -31,7 +33,7 @@ class AutoComplete extends Component {
   handleSearch = e => {
     const searchString = e.target.value;
     const result = [];
-
+    currentFocus = -1;
     // This could be the result of an ajax request
     for (const item of data) {
       if (
@@ -43,7 +45,8 @@ class AutoComplete extends Component {
     }
 
     this.setState({
-      suggestions: result.slice(0, 10), // Limit result to 10
+      // suggestions: result.slice(0, 10), // Limit result to 10
+      suggestions: result,
       selectedText: searchString
     });
 
@@ -57,17 +60,60 @@ class AutoComplete extends Component {
     this.setState({ selectedText: e.target.innerText, suggestions: [] });
   };
 
+  handleNavigation = e => {
+    const items = document.querySelectorAll("li");
+
+    if (e.keyCode === 40) {
+      currentFocus++;
+      this.addActive(items);
+    } else if (e.keyCode === 38) {
+      currentFocus--;
+      this.addActive(items);
+    } else if (e.keyCode === 13) {
+      e.preventDefault();
+      this.setState({
+        suggestions: [],
+        selectedText: document.querySelector(".active").innerHTML
+      });
+    }
+  };
+
+  addActive = items => {
+    if (!items) {
+      return false;
+    }
+
+    this.removeActive(items);
+
+    if (currentFocus >= items.length) {
+      currentFocus = 0;
+    }
+
+    if (currentFocus < 0) {
+      currentFocus = items.length - 1;
+    }
+
+    items[currentFocus].classList.add("active");
+  };
+
+  removeActive = items => {
+    items.forEach(item => {
+      item.classList.remove("active");
+    });
+  };
+
   render() {
     return (
       <div className="autocomplete">
         <input
-          ref={input => this.searchInput = input }
+          ref={input => (this.searchInput = input)}
           type="text"
           className="autocomplete__input"
           placeholder="Search for a country"
           value={this.state.selectedText}
           onChange={this.handleSearch}
         />
+
         {this.state.suggestions.length > 0 && (
           <div className="autocomplete__suggestions">
             <div className="arrow-up" />
@@ -82,7 +128,7 @@ class AutoComplete extends Component {
                       onClick={this.updateValOnClick}
                       tabIndex="1"
                     >
-                      <a className="autocomplete__suggestions-link">{item}</a>
+                      {item}
                     </li>
                   );
                 })}
