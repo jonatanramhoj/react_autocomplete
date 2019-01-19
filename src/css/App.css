@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
 
 body {
-  background: linear-gradient(to top, #ebc0fd 0%, #d9ded8 100%);
+  background-image: linear-gradient(to right, #ffafbd, #ffc3a0);
   width: 100%;
   height: 100vh;
   font-family: "Open Sans", sans-serif;
@@ -15,57 +15,67 @@ body {
   transform: translate(-50%, -55%);
 }
 
-.autocomplete__input {
+.input {
   padding: 20px;
-  box-shadow: 0 7px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 3px 14px 1px rgba(74, 74, 74, 0.2);
   outline: none;
   border: none;
-  min-width: 400px;
-  border-radius: 3px;
-  color: #333;
+  min-width: 600px;
+  width: 100%;
+  color: #444;
   letter-spacing: 0.3px;
+  font-size: 24px;
 }
 
-.autocomplete__suggestions {
+@media (max-width: 768px) {
+  .input {
+    min-width: 340px;
+    font-size: 18px;
+  }
+}
+
+.suggestions {
   width: 100%;
   position: absolute;
   left: 0;
-  top: 70px;
+  top: 90px;
   background: #fff;
-  box-shadow: 0 7px 30px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  box-shadow: 0px 3px 14px 1px rgba(74, 74, 74, 0.2);
 }
 
-.autocomplete__suggestions-inner {
-  padding: 20px;
+.suggestions-inner {
   max-height: 450px;
   overflow-y: auto;
 }
 
-.autocomplete__suggestions-item {
+.suggestions-item {
   display: block;
-  margin-bottom: 5px;
-  transition: color 0.15s ease-in-out;
+  /* transition: all 0.1s ease-in-out; */
   cursor: pointer;
   outline: none;
+  color: #444;
+  border-bottom: 1px solid #eee;
+  padding: 15px 15px 15px 20px;
 }
 
-.autocomplete__suggestions-item:last-child {
-  margin-bottom: 0;
+.suggestions-item:last-child {
+  border-bottom: 0;
 }
 
-.autocomplete__suggestions-item:hover {
-  color: purple;
+.suggestions-item:hover {
+  background: #f9f9f9;
 }
 
-.autocomplete__suggestions-link {
+.suggestions-link {
   border-bottom: 1px solid transparent;
   padding-bottom: 1px;
 }
 
-.active {
-  color: purple;
-  border-color: purple;
+.active,
+.suggestions-item.active:hover {
+  background: #444;
+  color: #fff;
+  border-color: #444;
 }
 
 .arrow-up {
@@ -82,21 +92,17 @@ body {
 
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: #aaa;
-  font-weight: bold;
+  color: #ffafbd;
 }
 ::-moz-placeholder {
   /* Firefox 19+ */
-  color: #aaa;
-  font-weight: bold;
+  color: #ffafbd;
 }
 :-ms-input-placeholder {
   /* IE 10+ */
-  color: #aaa;
-  font-weight: bold;
+  color: #ffafbd;
 }
 :-moz-placeholder {
   /* Firefox 18- */
-  color: #aaa;
-  font-weight: bold;
+  color: #ffafbd;
 }
