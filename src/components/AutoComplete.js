@@ -34,6 +34,7 @@ class AutoComplete extends Component {
     const searchString = e.target.value;
     const result = [];
     currentFocus = -1;
+
     // This could be the result of an ajax request
     for (const item of data) {
       if (
@@ -66,6 +67,7 @@ class AutoComplete extends Component {
     if (e.keyCode === 40) {
       currentFocus++;
       this.addActive(items);
+      // scroll to element
     } else if (e.keyCode === 38) {
       currentFocus--;
       this.addActive(items);
@@ -108,25 +110,24 @@ class AutoComplete extends Component {
         <input
           ref={input => (this.searchInput = input)}
           type="text"
-          className="autocomplete__input"
+          className="input"
           placeholder="Search for a country"
           value={this.state.selectedText}
           onChange={this.handleSearch}
         />
 
         {this.state.suggestions.length > 0 && (
-          <div className="autocomplete__suggestions">
+          <div className="suggestions">
             <div className="arrow-up" />
-            <div className="autocomplete__suggestions-inner">
+            <div className="suggestions-inner">
               <ul ref={this.list}>
                 {this.state.suggestions.map(item => {
                   return (
                     <li
                       ref={this.listItem}
                       key={item}
-                      className="autocomplete__suggestions-item"
+                      className="suggestions-item"
                       onClick={this.updateValOnClick}
-                      tabIndex="1"
                     >
                       {item}
                     </li>
