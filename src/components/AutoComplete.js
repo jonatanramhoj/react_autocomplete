@@ -24,12 +24,6 @@ class AutoComplete extends Component {
     document.addEventListener("keydown", this.handleNavigation);
   }
 
-  handleEscape = e => {
-    if (e.keyCode === 27) {
-      this.setState({ suggestions: [] });
-    }
-  };
-
   handleSearch = e => {
     const searchString = e.target.value;
     const result = [];
@@ -41,15 +35,27 @@ class AutoComplete extends Component {
         searchString.toLowerCase() ===
         item.slice(0, searchString.length).toLowerCase()
       ) {
-        const strong = React.createElement('strong', null, item.substr(0, searchString.length));
-        const span = React.createElement('span', null, item.substr(searchString.length));
-        const div = React.createElement('div', null, strong, span);
+        const strong = React.createElement(
+          "strong",
+          null,
+          item.substr(0, searchString.length)
+        );
+        const span = React.createElement(
+          "span",
+          null,
+          item.substr(searchString.length)
+        );
+        const input = React.createElement("input", {
+          type: "hidden",
+          value: item
+        });
+        const div = React.createElement("div", null, strong, span, input);
         result.push(div);
       }
     }
 
     this.setState({
-      suggestions: result.slice(0, 10), // Limit result to 10
+      suggestions: result.slice(0, 8), // Limit result
       selectedText: searchString
     });
 
@@ -59,12 +65,8 @@ class AutoComplete extends Component {
     }
   };
 
-  updateValOnClick = e => {
-    this.setState({ selectedText: e.target.innerText, suggestions: [] });
-  };
-
   handleNavigation = e => {
-    const items = document.querySelectorAll("li");
+    const items = document.querySelectorAll(".results-item");
 
     if (e.keyCode === 40) {
       currentFocus++;
@@ -75,16 +77,22 @@ class AutoComplete extends Component {
       this.addActive(items);
     } else if (e.keyCode === 13) {
       e.preventDefault();
-      this.setState({
-        suggestions: [],
-        selectedText: document.querySelector(".active").innerHTML
-      });
+      if (currentFocus > -1) {
+        if (items.length) {
+          this.setState({
+            suggestions: [],
+            selectedText: document
+              .querySelector(".active")
+              .querySelector("input").value
+          });
+        }
+      }
     }
   };
 
   addActive = items => {
-    if (!items) {
-      return false;
+    if (!items.length) {
+      return;
     }
 
     this.removeActive(items);
@@ -106,9 +114,20 @@ class AutoComplete extends Component {
     });
   };
 
+  handleEscape = e => {
+    if (e.keyCode === 27) {
+      this.setState({ suggestions: [] });
+    }
+  };
+
+  updateValOnClick = e => {
+    const selected = e.currentTarget.querySelector("input").value;
+    this.setState({ selectedText: selected, suggestions: [] });
+  };
+
   render() {
     return (
-      <div className="autocomplete">
+      <form className="autocomplete" autoComplete="off">
         <input
           ref={input => (this.searchInput = input)}
           type="text"
@@ -119,16 +138,16 @@ class AutoComplete extends Component {
         />
 
         {this.state.suggestions.length > 0 && (
-          <div className="suggestions">
+          <div className="results">
             <div className="arrow-up" />
-            <div className="suggestions-inner">
+            <div className="results-inner">
               <ul ref={this.list}>
                 {this.state.suggestions.map((item, index) => {
                   return (
                     <li
                       ref={this.listItem}
                       key={index}
-                      className="suggestions-item"
+                      className="results-item"
                       onClick={this.updateValOnClick}
                     >
                       {item}
@@ -139,7 +158,7 @@ class AutoComplete extends Component {
             </div>
           </div>
         )}
-      </div>
+      </form>
     );
   }
 }
