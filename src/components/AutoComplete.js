@@ -41,13 +41,15 @@ class AutoComplete extends Component {
         searchString.toLowerCase() ===
         item.slice(0, searchString.length).toLowerCase()
       ) {
-        result.push(item);
+        const strong = React.createElement('strong', null, item.substr(0, searchString.length));
+        const span = React.createElement('span', null, item.substr(searchString.length));
+        const div = React.createElement('div', null, strong, span);
+        result.push(div);
       }
     }
 
     this.setState({
-      // suggestions: result.slice(0, 10), // Limit result to 10
-      suggestions: result,
+      suggestions: result.slice(0, 10), // Limit result to 10
       selectedText: searchString
     });
 
@@ -121,11 +123,11 @@ class AutoComplete extends Component {
             <div className="arrow-up" />
             <div className="suggestions-inner">
               <ul ref={this.list}>
-                {this.state.suggestions.map(item => {
+                {this.state.suggestions.map((item, index) => {
                   return (
                     <li
                       ref={this.listItem}
-                      key={item}
+                      key={index}
                       className="suggestions-item"
                       onClick={this.updateValOnClick}
                     >
