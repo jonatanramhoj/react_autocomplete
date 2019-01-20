@@ -68,13 +68,15 @@ class AutoComplete extends Component {
   handleNavigation = e => {
     const items = document.querySelectorAll(".results-item");
 
+    // arrow down
     if (e.keyCode === 40) {
       currentFocus++;
       this.addActive(items);
-      // scroll to element
+      // arrow up
     } else if (e.keyCode === 38) {
       currentFocus--;
       this.addActive(items);
+      // enter
     } else if (e.keyCode === 13) {
       e.preventDefault();
       if (currentFocus > -1) {
@@ -158,6 +160,12 @@ class AutoComplete extends Component {
             </div>
           </div>
         )}
+        <div className="info">
+          <p>
+            React Autocomplete with keyboard navigation. <br className="desktop" /> Type something and use
+            the arrows to navigate, press enter to select.
+          </p>
+        </div>
       </form>
     );
   }

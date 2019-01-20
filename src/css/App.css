@@ -33,6 +33,7 @@ body {
   .input {
     min-width: 340px;
     font-size: 18px;
+    padding: 15px;
   }
 }
 
@@ -45,6 +46,12 @@ body {
   box-shadow: 0px 3px 14px 1px rgba(74, 74, 74, 0.2);
 }
 
+@media (max-width: 768px) {
+  .results {
+    top: 70px;
+  }
+}
+
 .results-inner {
   max-height: 450px;
   overflow-y: auto;
@@ -52,12 +59,17 @@ body {
 
 .results-item {
   display: block;
-  /* transition: all 0.1s ease-in-out; */
   cursor: pointer;
   outline: none;
   color: #444;
   border-bottom: 1px solid #eee;
   padding: 15px 15px 15px 20px;
+}
+
+@media (max-width: 768px) {
+  .results-item {
+    padding: 10px 10px 10px 15px;
+  }
 }
 
 .results-item:last-child {
@@ -85,6 +97,28 @@ body {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid #fff;
+}
+
+.info {
+  margin-top: 50px;
+}
+
+.info p {
+  color: #fff;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+@media(max-width: 768px) {
+  .info p {
+    font-size: 16px;
+  }
+}
+
+@media(max-width: 768px) {
+  .desktop {
+    display: none;
+  }
 }
 
 ::-webkit-input-placeholder {
