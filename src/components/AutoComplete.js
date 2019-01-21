@@ -79,15 +79,12 @@ class AutoComplete extends Component {
       // enter
     } else if (e.keyCode === 13) {
       e.preventDefault();
-      if (currentFocus > -1) {
-        if (items.length) {
-          this.setState({
-            suggestions: [],
-            selectedText: document
-              .querySelector(".active")
-              .querySelector("input").value
-          });
-        }
+      if (currentFocus > -1 && items.length) {
+        this.setState({
+          selectedText: document.querySelector(".active").querySelector("input")
+            .value,
+          suggestions: []
+        });
       }
     }
   };
@@ -162,8 +159,9 @@ class AutoComplete extends Component {
         )}
         <div className="info">
           <p>
-            React Autocomplete with keyboard navigation. <br className="desktop" /> Type something and use
-            the arrows to navigate, press enter to select.
+            React Autocomplete with keyboard navigation.
+            <br className="desktop" /> Type something and use the arrows to
+            navigate, press enter to select.
           </p>
         </div>
       </form>
