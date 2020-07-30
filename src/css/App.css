@@ -136,3 +136,18 @@ body {
   /* Firefox 18- */
   color: #ffafbd;
 }
+
+.nav {
+  margin: 0 auto;
+  padding: 100px;
+}
+
+.nav a {
+  margin: 20px;
+}
+
+.main {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 100px;
+}
